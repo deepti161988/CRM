@@ -33,7 +33,7 @@ AbcAutomation.AccountForm = (function ()
 		{
 			Xrm.WebApi.retrieveMultipleRecords(
 				"account",
-				"?$select=name,numberofemployees,address1_city&$filter=address1_city eq 'Redmond' and numberofemployees lt 3000").then(
+				"?$select=name,numberofemployees,address1_city,_parentaccountid_value&$filter=address1_city eq 'Redmond' and numberofemployees lt 3000").then(
 
 			function success(result)
 			{
@@ -43,11 +43,18 @@ AbcAutomation.AccountForm = (function ()
 					console.log("Account Name: " + account.name);
 					console.log("numberofemployees: " + account.numberofemployees);
 					console.log("address1_city: " + account.address1_city);
+					var parentaccountid = account["_parentaccountid_value"]; // Lookup
+					var parentaccountid_formatted = account["_parentaccountid_value@OData.Community.Display.V1.FormattedValue"];
+					var parentaccountid_lookuplogicalname = account["_parentaccountid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+					console.log("parentaccountid: " + parentaccountid);
+					console.log("parentaccountid_formatted: " + parentaccountid_formatted);
+					console.log("parentaccountid_lookuplogicalname: " + parentaccountid_lookuplogicalname);
 					// Prepare description value
 					var descriptionText = account.address1_city + " - " + account.numberofemployees;
 					// Update object
 					var data = {
-						"description": descriptionText
+						"description": descriptionText,
+						"parentaccountid@odata.bind": "/accounts(4e9ce1cc-af0e-f111-8406-000d3a32ddf9)"
 					};
 					Xrm.WebApi.updateRecord("account", account.accountid, data).then(
 
