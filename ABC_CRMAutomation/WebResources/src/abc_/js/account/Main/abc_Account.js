@@ -6,42 +6,67 @@ AbcAutomation.AccountForm = (function ()
 		OnLoad: function (executionContext)
 		{
 			var formContext = executionContext.getFormContext();
-			Xrm.Navigation.openAlertDialog(
-			{
-				confirmButtonLabel: "OK",
-				text: "Welcome to onload event",
-				title: "Form Onload"
-			});
+			console.log("Account Form Loaded");
 		},
 		OnSave: function (executionContext)
 		{
 			var formContext = executionContext.getFormContext();
-			Xrm.Navigation.openAlertDialog(
-			{
-				confirmButtonLabel: "OK",
-				text: "Welcome to onsave event",
-				title: "Form OnSave"
-			});
 		},
-		OnChangeFax: function (executionContext)
+		// NEW METHOD (retrieveMultipleRecords example)
+		OnChangePhoneNumber: function (executionContext)
 		{
 			var formContext = executionContext.getFormContext();
-			Xrm.Navigation.openAlertDialog(
+			// Get Phone Number field
+			var phoneAttr = formContext.getAttribute("telephone1");
+			if (phoneAttr)
 			{
-				confirmButtonLabel: "OK",
-				text: "Welcome to field onchange event",
-				title: "Field Onchange"
-			});
+				var phoneNumber = phoneAttr.getValue();
+				if (phoneNumber !== null)
+				{
+					console.log("New Phone Number: " + phoneNumber);
+					// Call retrieveMultipleRecords method
+					AbcAutomation.AccountForm.SetAccountDescription();
+				}
+			}
 		},
-		OnChangeParentAccount: function (executionContext)
+		SetAccountDescription: function ()
 		{
-			var formContext = executionContext.getFormContext();
-			// Xrm.Navigation.openAlertDialog(
-			// {
-			// 	confirmButtonLabel: "OK",
-			// 	text: "Welcome to field onchange event",
-			// 	title: "Field Onchange"
-			// });
+			Xrm.WebApi.retrieveMultipleRecords(
+				"account",
+				"?$select=name,numberofemployees,address1_city&$filter=address1_city eq 'Redmond' and numberofemployees lt 3000").then(
+
+			function success(result)
+			{
+				result.entities.forEach(function (account)
+				{
+					console.log("Account ID: " + account.accountid);
+					console.log("Account Name: " + account.name);
+					console.log("numberofemployees: " + account.numberofemployees);
+					console.log("address1_city: " + account.address1_city);
+					// Prepare description value
+					var descriptionText = account.address1_city + " - " + account.numberofemployees;
+					// Update object
+					var data = {
+						"description": descriptionText
+					};
+					Xrm.WebApi.updateRecord("account", account.accountid, data).then(
+
+					function successUpdate()
+					{
+						console.log("Updated description for: " + account.name);
+					},
+
+					function (error)
+					{
+						console.log(error.message);
+					});
+				});
+			},
+
+			function (error)
+			{
+				console.log(error.message);
+			});
 		}
 	};
 })();
