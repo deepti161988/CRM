@@ -1,0 +1,20 @@
+{
+  "suppressINotifyPattern": true,
+  "suppressGeneratedCodeAttribute": true,
+  "language": "CS",
+  "namespace": "SharedMetadata",
+  "serviceContextName": "OrgContext",
+  "generateGlobalOptionSets": false,
+  "emitFieldsClasses": false,
+  "entityTypesFolder": "Entities",
+  "optionSetsTypesFolder": "OptionSets",
+  "entityNamesFilter": [
+    "account",
+    "contact",
+    "abc_employee",
+    "abc_state",
+    "abc_district"
+  ],  
+  "emitEntityETC": false,
+  "emitVirtualAttributes": false
+}
