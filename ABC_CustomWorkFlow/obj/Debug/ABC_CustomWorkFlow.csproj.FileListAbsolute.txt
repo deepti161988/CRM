@@ -1,6 +1,0 @@
-C:\Deepti\CRM\ABC_D365CRMAutomation\ABC_CustomWorkFlow\bin\Debug\ABC_CustomWorkFlow.dll
-C:\Deepti\CRM\ABC_D365CRMAutomation\ABC_CustomWorkFlow\bin\Debug\ABC_CustomWorkFlow.pdb
-C:\Deepti\CRM\ABC_D365CRMAutomation\ABC_CustomWorkFlow\obj\Debug\ABC_CustomWorkFlow.csproj.AssemblyReference.cache
-C:\Deepti\CRM\ABC_D365CRMAutomation\ABC_CustomWorkFlow\obj\Debug\ABC_CustomWorkFlow.csproj.CoreCompileInputs.cache
-C:\Deepti\CRM\ABC_D365CRMAutomation\ABC_CustomWorkFlow\obj\Debug\ABC_CustomWorkFlow.dll
-C:\Deepti\CRM\ABC_D365CRMAutomation\ABC_CustomWorkFlow\obj\Debug\ABC_CustomWorkFlow.pdb
